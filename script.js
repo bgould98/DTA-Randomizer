@@ -10,12 +10,11 @@
      4=gold/IV) a [min,max] range. The generator fills as close to
      totalTiles as it can while respecting these ranges.
 
-   portalEntrance / miniBoss: how many of each (normally 1 each). Portal
-     entrance always lands at the start of the path, mini-boss at the end.
+   portalEntrance / miniBoss: how many of each (normally 1 each).
 
-   miniBossSlots: number of golden rhombus token slots on the mini-boss tile.
+   miniBossSlots: number of golden diamond token slots on the mini-boss tile.
 
-   miniBossKeys: how many golden rhombus key pickups get placed on crawl tiles
+   miniBossKeys: how many golden diamond key pickups get placed on crawl tiles
      to unlock the mini-boss.
 
    salves: how many existing tiles get a Salve icon in their corner
