@@ -1,24 +1,29 @@
 /* =========================================================================
    PORTAL CRAWL RANDOMIZER — CONFIG
    -------------------------------------------------------------------------
-   Everything you'd want to tweak per scenario tier lives in TIERS below.
-   Tier 1 has the real numbers. Tiers 3/5/7 are templates — same shape,
-   placeholder numbers — edit the values, no other code needs to change.
+   Everything you'd want to tweak per scenario tier is in TIERS below.
 
    totalTiles: array of allowed board sizes (excluding portal entrance and
      mini-boss) — a fresh roll picks one at random, e.g. [11,12].
+
    tileCounts: for each monster level (1=green/I, 2=blue/II, 3=purple/III,
      4=gold/IV) a [min,max] range. The generator fills as close to
      totalTiles as it can while respecting these ranges.
+
    portalEntrance / miniBoss: how many of each (normally 1 each). Portal
      entrance always lands at the start of the path, mini-boss at the end.
+
    miniBossSlots: number of golden rhombus token slots on the mini-boss tile.
+
    miniBossKeys: how many golden rhombus key pickups get placed on crawl tiles
      to unlock the mini-boss.
+
    salves: how many existing tiles get a Salve icon in their corner
      (can land on regular level tiles or the mini-boss tile, never portal).
+
    chests: array of {level, count} — that many existing tiles of that
      level get a chest icon in their corner (never on portal or mini-boss).
+
    shop: array of {type, color, count} — small "?" cards in the Conclusion
      panel. Add more entries for higher tiers if you want more reward types.
    ========================================================================= */
@@ -40,7 +45,7 @@ const TIERS = {
     shop: [ {type:'common', color:'#4b9e5f', count:3}, {type:'rare', color:'#3f7fc9', count:1} ],
     kingsHand: { maxPerTurn:1, rollRange:'4-6' },
   },
-  3: { // TEMPLATE — edit these numbers to match your Portal Crawl 3 cards
+  3: {
     accent:'--tier3',
     totalTiles: [11,12],
     tileCounts: { 1:[3,4], 2:[5,6], 3:[2,2], 4:[1,1] },
@@ -56,7 +61,7 @@ const TIERS = {
     shop: [ {type:'common', color:'#4b9e5f', count:2}, {type:'rare', color:'#3f7fc9', count:2} ],
     kingsHand: { maxPerTurn:1, rollRange:'4-6' },
   },
-  5: { // TEMPLATE — edit these numbers to match your Portal Crawl 5 cards
+  5: {
     accent:'--tier5',
     totalTiles: [11,12],
     tileCounts: { 1:[2,2], 2:[4,5], 3:[3,3], 4:[2,2] },
@@ -72,7 +77,7 @@ const TIERS = {
     shop: [ {type:'common', color:'#4b9e5f', count:1}, {type:'rare', color:'#3f7fc9', count:2}, {type:'epic', color:'#7a4fb0', count:1} ],
     kingsHand: { maxPerTurn:1, rollRange:'3-6' },
   },
-  7: { // TEMPLATE — edit these numbers to match your Portal Crawl 7 cards
+  7: {
     accent:'--tier7',
     totalTiles: [11,12],
     tileCounts: { 1:[1,2], 2:[3,5], 3:[5,5], 4:[3,3] },
@@ -112,19 +117,23 @@ function seedToRandom(seed){
   };
 }
 function rand(){ return activeRandom(); }
+
 function shareSeed(){ return `tier${currentTier}-${currentSeed}`; }
+
 function parseSeedInput(value){
   const raw = value.trim();
   const match = raw.match(/^tier(1|3|5|7)-(.+)$/i);
   if(match) return { tier: parseInt(match[1]), seed: match[2].trim() };
   return { tier: currentTier, seed: raw };
 }
+
 function setActiveTier(tier){
   currentTier = tier;
   document.querySelectorAll('.tier-btn').forEach(btn=>{
     btn.classList.toggle('active', parseInt(btn.dataset.t) === currentTier);
   });
 }
+
 function updateSeedInput(){
   const input = document.getElementById('seedInput');
   if(input) input.value = shareSeed();
@@ -138,10 +147,12 @@ function shuffle(arr){
   }
   return a;
 }
+
 function pick(arr){ return arr[Math.floor(rand()*arr.length)]; }
 
 const CELL = 46, STEP = CELL+6;
 const ORIGIN = {x:60,y:60};
+
 function cellPos(cx,cy){ return {x:ORIGIN.x+cx*STEP, y:ORIGIN.y+cy*STEP}; }
 function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
 function levelColor(l){ return cssVar(['--lvl1','--lvl2','--lvl3','--lvl4'][l-1]); }
@@ -160,7 +171,7 @@ function pickLevelCounts(tileCounts, target){
     counts[pick(room)]++;
     remaining--;
   }
-  return counts; // counts[0] = level 1 count, counts[1] = level 2, ...
+  return counts;
 }
 
 /* ---------- random-walk path generator ---------- */
