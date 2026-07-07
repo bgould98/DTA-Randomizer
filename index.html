@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Portal Crawl Randomizer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <h1>Portal Crawl Randomizer</h1>
+  <div class="sub">Fan-made dungeon generator for Dice Throne: Adventures</div>
+
+  <div class="tiers">
+    <button class="tier-btn" data-t="1">Tier 1</button>
+    <button class="tier-btn" data-t="3">Tier 3</button>
+    <button class="tier-btn" data-t="5">Tier 5</button>
+    <button class="tier-btn" data-t="7">Tier 7</button>
+  </div>
+
+  <div class="controls">
+    <button class="primary" id="rollBtn">🎲 Randomize</button>
+    <button class="secondary" id="seedBtn">Copy Seed</button>
+    <div class="seed-load">
+      <input id="seedInput" type="text" placeholder="Load seed" autocomplete="off">
+      <button class="secondary" id="loadSeedBtn">Load</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="board-frame">
+      <svg id="board" width="100%" viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <div class="sidebar">
+      <div class="setup" id="setup"></div>
+      <div class="conclusion" id="conclusion"></div>
+      <div class="kingshand" id="kingshand"></div>
+    </div>
+  </div>
+
+  <div class="legend" id="legend">
+    <h2>Legend</h2>
+    <div class="legend-grid" id="legendGrid"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
